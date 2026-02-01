@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Just For You ❤️</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:linear-gradient(to bottom,#ff9a9e,#fad0c4);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  overflow:hidden;
+}
+
+.box{
+  background:rgba(255,255,255,0.25);
+  padding:25px;
+  border-radius:22px;
+  width:90%;
+  max-width:380px;
+  text-align:center;
+  z-index:2;
+  backdrop-filter: blur(6px);
+}
+
+button,input,textarea{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:15px;
+  font-size:15px;
+}
+
+button{
+  background:white;
+  color:#ff4d6d;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+
+/ cute gif sticker /
+.sticker{
+  position:fixed;
+  bottom:-300px;
+  left:50%;
+  transform:translateX(-50%) scale(0.5);
+  animation:pop 1.2s ease forwards;
+  z-index:10;
+}
+
+@keyframes pop{
+  to{
+    bottom:110px;
+    transform:translateX(-50%) scale(1);
+  }
+}
+
+.sticker img{
+  width:200px;
+  border-radius:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box" id="app"></div>
+
+<script>
+const app=document.getElementById("app");
+let answers={};
+
+/ pages /
+function page1(){
+app.innerHTML=`
+<h2>Enjoy your gift💌</h2>
+<p>I made this only for you</p>
+<button onclick="page2()">Start 🥹</button>`;
+}
+
+function page2(){
+app.innerHTML=`
+<h3>Be honest 😏</h3>
+<p>Do you remember our first meet?</p>
+<button onmouseover="move(this)">No 😳</button>
+<button onclick="page3()">Of course 🥹</button>`;
+}
+
+function move(btn){
+btn.style.position="absolute";
+btn.style.left=Math.random()*70+"%";
+btn.style.top=Math.random()*70+"%";
+}
+
+function page3(){
+app.innerHTML=`
+<h3>Answer me ✍️</h3>
+<input id="q1" placeholder="When did we first meet?">
+<textarea id="q2" placeholder="Our best memory…"></textarea>
+<textarea id="q3" placeholder="What reminds you of me?"></textarea>
+<textarea id="q4" placeholder="How do I make you feel?"></textarea>
+<button onclick="save()">Send 💌</button>`;
+}
+
+function save(){
+answers.q1=q1.value;
+answers.q2=q2.value;
+answers.q3=q3.value;
+answers.q4=q4.value;
+page4();
+}
+
+function page4(){
+app.innerHTML=`
+<p>
+I will always be your Valentine ye rouhy 🤍 <br><br>
+bon awel Valentine’s Day maa baadhna haltou hlila keyenou or maybe fi wa9tou bch i9arrabna akther.. 😉<br>
+nhb n9olk I’m sooo proud of you, you did so good 🫶 always remember that I’ll always be by your side 🥹<br>
+Inshallah we’ll never break up again, I’ll always love you and want you by my side ❤️<br>
+I’m really happy I met you… nshallah rabi ykhalik laya ✨
+<button onclick="page5()">Continue 😌</button>`;
+}
+
+function page5(){
+let link=
+location.origin+location.pathname+
+"?meet="+encodeURIComponent(answers.q1)+
+"&memory="+encodeURIComponent(answers.q2)+
+"&remind="+encodeURIComponent(answers.q3)+
+"&feel="+encodeURIComponent(answers.q4);
+
+app.innerHTML=`
+<h3>happy valentine's day ye rouhyy nhbk barsha 💋</h3>
+<p>Send me this link 💌</p>
+<input value="${link}" readonly>
+<button onclick="showSticker()">Click me 🥹</button>`;
+}
+
+/ view answers /
+const params=new URLSearchParams(location.search);
+
+if(params.has("meet")){
+app.innerHTML=`
+<h3>Your answers 💞</h3>
+<p><b>First meet:</b><br>${params.get("meet")}</p>
+<p><b>Best memory:</b><br>${params.get("memory")}</p>
+<p><b>Reminds you of me:</b><br>${params.get("remind")}</p>
+<p><b>How I make you feel:</b><br>${params.get("feel")}</p>
+<button onclick="showSticker()">One last thing 🥹</button>`;
+}else{
+page1();
+}
+
+/ cute gif sticker /
+function showSticker(){
+const s=document.createElement("div");
+s.className="sticker";
+s.innerHTML=`
+<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+`;
+document.body.appendChild(s);
+
+for(let i=0;i<25;i++){
+setTimeout(hearts,i*120);
+}
+}
+</script>
+
+</body>
+</html>
